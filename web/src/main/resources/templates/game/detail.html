@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      th:lang="en">
+    <head th:replace="~{layout :: head}"></head>
+    <body>
+        <th:block th:replace="~{layout :: menu}"/>
+        <th:block th:replace="~{game/menu :: menu}"/>
+        <div class="container-fluid">
+            <th:block th:replace="~{layout :: title}"/>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <tbody>
+                        <tr>
+                            <td class="title">Name</td>
+                            <td th:text="${game.name}"></td>
+                        </tr>
+                        <tr>
+                            <td class="title">Count of media</td>
+                            <td th:text="${game.mediaCount}"></td>
+                        </tr>
+                        <tr>
+                            <td class="title">Format</td>
+                            <td th:text="${game.format}"></td>
+                        </tr>
+                        <tr th:if="${T(com.github.vhromada.catalog.web.converter.ConverterUtils).convertGameAdditionalDataContent(game)}">
+                            <td class="title">Additional data</td>
+                            <td th:text="${T(com.github.vhromada.catalog.web.converter.ConverterUtils).convertGameAdditionalData(game)}"></td>
+                        </tr>
+                        <tr th:if="${!#strings.isEmpty(game.note)}">
+                            <td class="title">Note</td>
+                            <td th:text="${game.note}"></td>
+                        </tr>
+                        <tr th:if="${!game.cheat}">
+                            <td colspan="2"><a th:href="@{|/games/${game.uuid}/cheats/add|}">Add cheats</a></td>
+                        </tr>
+                        <tr th:if="${game.cheat}">
+                            <td colspan="2"><a th:href="@{|/games/${game.uuid}/cheats|}">Cheats</a></td>
+                        </tr>
+                        <tr th:if="${!#strings.isEmpty(game.wikiCz)}">
+                            <td colspan="2"><a target="_blank" th:href="@{|https://cz.wikipedia.org/wiki/${game.wikiCz}|}">Czech Wikipedia</a></td>
+                        </tr>
+                        <tr th:if="${!#strings.isEmpty(game.wikiEn)}">
+                            <td colspan="2"><a target="_blank" th:href="@{|https://en.wikipedia.org/wiki/${game.wikiEn}|}">English Wikipedia</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

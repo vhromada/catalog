@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      th:lang="en">
+    <head th:replace="~{layout :: head}"></head>
+    <body>
+        <th:block th:replace="~{layout :: menu}"/>
+        <th:block th:replace="~{movie/menu :: menu}"/>
+        <div class="container-fluid">
+            <th:block th:replace="~{layout :: title}"/>
+            <img alt="Picture" class="picture" th:src="@{|/pictures/${movie.picture}|}" th:if="${movie.picture != null}"/>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <tbody>
+                        <tr>
+                            <td class="title">Czech name</td>
+                            <td th:text="${movie.czechName}"></td>
+                        </tr>
+                        <tr>
+                            <td class="title">Original name</td>
+                            <td th:text="${movie.originalName}"></td>
+                        </tr>
+                        <tr>
+                            <td class="title">Genres</td>
+                            <td th:text="${T(com.github.vhromada.catalog.web.converter.ConverterUtils).convertGenres(movie.genres)}"></td>
+                        </tr>
+                        <tr>
+                            <td class="title">Year</td>
+                            <td th:text="${movie.year}"></td>
+                        </tr>
+                        <tr th:if="${!#lists.isEmpty(movie.languages)}">
+                            <td class="title">Languages</td>
+                            <td th:text="${T(com.github.vhromada.catalog.web.converter.ConverterUtils).convertStrings(movie.languages)}"></td>
+                        </tr>
+                        <tr th:if="${!#lists.isEmpty(movie.subtitles)}">
+                            <td class="title">Subtitles</td>
+                            <td th:text="${T(com.github.vhromada.catalog.web.converter.ConverterUtils).convertStrings(movie.subtitles)}"></td>
+                        </tr>
+                        <tr>
+                            <td class="title">Media</td>
+                            <td th:text="${T(com.github.vhromada.catalog.web.converter.ConverterUtils).convertMedia(movie.media)}"></td>
+                        </tr>
+                        <tr>
+                            <td class="title">Total length</td>
+                            <td th:text="${movie.formattedLength}"></td>
+                        </tr>
+                        <tr th:if="${!#strings.isEmpty(movie.note)}">
+                            <td class="title">Note</td>
+                            <td th:text="${movie.note}"></td>
+                        </tr>
+                        <tr th:if="${!#strings.isEmpty(movie.csfd)}">
+                            <td colspan="2"><a target="_blank" th:href="@{|https://www.csfd.cz/film/${movie.csfd}|}">ČSFD</a></td>
+                        </tr>
+                        <tr th:if="${movie.imdbCode > 0}">
+                            <td colspan="2">
+                                <a target="_blank"
+                                   th:href="@{https://www.imdb.com/title/{imdb}(imdb = 'tt' + ${T(com.github.vhromada.catalog.web.converter.ConverterUtils).convertImdbCode(movie.imdbCode)})}">
+                                    IMDB
+                                </a>
+                            </td>
+                        </tr>
+                        <tr th:if="${!#strings.isEmpty(movie.wikiCz)}">
+                            <td colspan="2"><a target="_blank" th:href="@{|https://cz.wikipedia.org/wiki/${movie.wikiCz}|}">Czech Wikipedia</a></td>
+                        </tr>
+                        <tr th:if="${!#strings.isEmpty(movie.wikiEn)}">
+                            <td colspan="2"><a target="_blank" th:href="@{|https://en.wikipedia.org/wiki/${movie.wikiEn}|}">English Wikipedia</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

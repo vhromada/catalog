@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      th:lang="en">
+    <!--/*@thymesVar id="music" type="java.util.List<com.github.vhromada.catalog.web.connector.entity.Music>"*/-->
+    <!--/*@thymesVar id="currentPage" type="java.lang.Integer"*/-->
+    <!--/*@thymesVar id="totalPages" type="java.lang.Integer"*/-->
+    <!--/*@thymesVar id="query" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="statistics" type="com.github.vhromada.catalog.web.connector.entity.MusicStatistics"*/-->
+    <head th:replace="~{layout :: head}"></head>
+    <body>
+        <th:block th:replace="~{layout :: menu}"/>
+        <th:block th:replace="~{music/menu :: menu}"/>
+        <div class="container-fluid">
+            <th:block th:replace="~{layout :: title}"/>
+            <th:block th:replace="~{music/searchForm :: form}"/>
+            <div class="table-responsive">
+                <table class="table table-hover" th:if="${!#lists.isEmpty(music)}">
+                    <thead>
+                        <tr>
+                            <th>Music</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <th:block th:each="musicItem : ${music}">
+                            <tr>
+                                <td><a th:href="@{|/music/${musicItem.uuid}/detail|}" th:text="${musicItem.name}"></a></td>
+                                <td><a th:href="@{|/music/${musicItem.uuid}/songs|}">Songs</a></td>
+                                <td><a th:href="@{|/music/duplicate/${musicItem.uuid}|}">Duplicate</a></td>
+                                <td><a th:href="@{|/music/edit/${musicItem.uuid}|}">Edit</a></td>
+                                <td><a th:href="@{|/music/remove/${musicItem.uuid}|}">Remove</a></td>
+                            </tr>
+                        </th:block>
+                    </tbody>
+                </table>
+            </div>
+            <nav aria-label="Music pagination" th:if="${!#lists.isEmpty(music) && totalPages > 1}">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item" th:classappend="${currentPage <= 1} ? 'disabled'">
+                        <a class="page-link" aria-label="First" th:attr="tabIndex=${currentPage <= 1} ? -1" th:href="@{|/music${query}page=1|}">&laquo;&laquo;</a>
+                    </li>
+                    <li class="page-item" th:classappend="${currentPage <= 1} ? 'disabled'">
+                        <a class="page-link" aria-label="Previous" th:attr="tabIndex=${currentPage <= 1} ? -1" th:href="@{|/music${query}page=${currentPage - 1}|}">&laquo;</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" th:text="${T(com.github.vhromada.catalog.web.converter.ConverterUtils).convertPage(currentPage, totalPages)}"
+                           th:href="@{|/music${query}page=${currentPage}|}">
+                        </a>
+                    </li>
+                    <li class="page-item" th:classappend="${currentPage >= totalPages} ? 'disabled'">
+                        <a class="page-link" aria-label="Next" th:attr="tabIndex=${currentPage >= totalPages} ? -1" th:href="@{|/music${query}page=${currentPage + 1}|}">&raquo;</a>
+                    </li>
+                    <li class="page-item" th:classappend="${currentPage >= totalPages} ? 'disabled'">
+                        <a class="page-link" aria-label="Next" th:attr="tabIndex=${currentPage >= totalPages} ? -1" th:href="@{|/music${query}page=${totalPages}|}">&raquo;&raquo;</a>
+                    </li>
+                </ul>
+            </nav>
+            <th:block th:if="${#lists.isEmpty(music)}">No records.</th:block>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Count of music</th>
+                            <th>Count of media</th>
+                            <th>Count of songs</th>
+                            <th>Total length</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td th:text="${statistics.count}"></td>
+                            <td th:text="${statistics.mediaCount}"></td>
+                            <td th:text="${statistics.songsCount}"></td>
+                            <td th:text="${statistics.length}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

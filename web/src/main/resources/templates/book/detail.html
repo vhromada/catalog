@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      th:lang="en">
+    <head th:replace="~{layout :: head}"></head>
+    <body>
+        <th:block th:replace="~{layout :: menu}"/>
+        <th:block th:replace="~{book/menu :: menu}"/>
+        <div class="container-fluid">
+            <th:block th:replace="~{layout :: title}"/>
+            <div class="table-responsive">
+                <table class="table table-hover detail">
+                    <tbody>
+                        <tr>
+                            <td class="title">Czech name</td>
+                            <td th:text="${book.czechName}"></td>
+                        </tr>
+                        <tr>
+                            <td class="title">Original name</td>
+                            <td th:text="${book.originalName}"></td>
+                        </tr>
+                        <tr>
+                            <td class="title">Authors</td>
+                            <td th:text="${T(com.github.vhromada.catalog.web.converter.ConverterUtils).convertAuthors(book.authors)}"></td>
+                        </tr>
+                        <tr>
+                            <td class="title">Description</td>
+                            <td th:text="${book.description}"></td>
+                        </tr>
+                        <tr th:if="${book.itemsCount > 0}">
+                            <td class="title">Count of items</td>
+                            <td th:text="${book.itemsCount}"></td>
+                        </tr>
+                        <tr th:if="${!#strings.isEmpty(book.note)}">
+                            <td class="title">Note</td>
+                            <td th:text="${book.note}"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><a th:href="@{|/books/${book.uuid}/items|}">Items</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

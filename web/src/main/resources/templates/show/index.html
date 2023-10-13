@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      th:lang="en">
+    <!--/*@thymesVar id="shows" type="java.util.List<com.github.vhromada.catalog.web.connector.entity.Show>"*/-->
+    <!--/*@thymesVar id="currentPage" type="java.lang.Integer"*/-->
+    <!--/*@thymesVar id="totalPages" type="java.lang.Integer"*/-->
+    <!--/*@thymesVar id="query" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="statistics" type="com.github.vhromada.catalog.web.connector.entity.ShowStatistics"*/-->
+    <head th:replace="~{layout :: head}"></head>
+    <body>
+        <th:block th:replace="~{layout :: menu}"/>
+        <th:block th:replace="~{show/menu :: menu}"/>
+        <div class="container-fluid">
+            <th:block th:replace="~{layout :: title}"/>
+            <th:block th:replace="~{show/searchForm :: form}"/>
+            <div class="table-responsive">
+                <table class="table table-hover" th:if="${!#lists.isEmpty(shows)}">
+                    <thead>
+                        <tr>
+                            <th>Show</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <th:block th:each="show : ${shows}">
+                            <tr>
+                                <td><a th:href="@{|/shows/${show.uuid}/detail|}" th:text="${show.czechName}"></a></td>
+                                <td><a th:href="@{|/shows/${show.uuid}/seasons|}">Seasons</a></td>
+                                <td><a th:href="@{|/shows/duplicate/${show.uuid}|}">Duplicate</a></td>
+                                <td><a th:href="@{|/shows/edit/${show.uuid}|}">Edit</a></td>
+                                <td><a th:href="@{|/shows/remove/${show.uuid}|}">Remove</a></td>
+                            </tr>
+                        </th:block>
+                    </tbody>
+                </table>
+            </div>
+            <nav aria-label="Shows pagination" th:if="${!#lists.isEmpty(shows) && totalPages > 1}">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item" th:classappend="${currentPage <= 1} ? 'disabled'">
+                        <a class="page-link" aria-label="First" th:attr="tabIndex=${currentPage <= 1} ? -1" th:href="@{|/shows${query}page=1|}">&laquo;&laquo;</a>
+                    </li>
+                    <li class="page-item" th:classappend="${currentPage <= 1} ? 'disabled'">
+                        <a class="page-link" aria-label="Previous" th:attr="tabIndex=${currentPage <= 1} ? -1" th:href="@{|/shows${query}page=${currentPage - 1}|}">&laquo;</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" th:text="${T(com.github.vhromada.catalog.web.converter.ConverterUtils).convertPage(currentPage, totalPages)}"
+                           th:href="@{|/shows${query}page=${currentPage}|}">
+                        </a>
+                    </li>
+                    <li class="page-item" th:classappend="${currentPage >= totalPages} ? 'disabled'">
+                        <a class="page-link" aria-label="Next" th:attr="tabIndex=${currentPage >= totalPages} ? -1" th:href="@{|/shows${query}page=${currentPage + 1}|}">&raquo;</a>
+                    </li>
+                    <li class="page-item" th:classappend="${currentPage >= totalPages} ? 'disabled'">
+                        <a class="page-link" aria-label="Next" th:attr="tabIndex=${currentPage >= totalPages} ? -1" th:href="@{|/shows${query}page=${totalPages}|}">&raquo;&raquo;</a>
+                    </li>
+                </ul>
+            </nav>
+            <th:block th:if="${#lists.isEmpty(shows)}">No records.</th:block>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Count of shows</th>
+                            <th>Count of seasons</th>
+                            <th>Count of episodes</th>
+                            <th>Total length</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td th:text="${statistics.count}"></td>
+                            <td th:text="${statistics.seasonsCount}"></td>
+                            <td th:text="${statistics.episodesCount}"></td>
+                            <td th:text="${statistics.length}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

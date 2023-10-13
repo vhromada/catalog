@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      th:lang="en">
+    <!--/*@thymesVar id="filter" type="com.github.vhromada.catalog.web.fo.AuthorFilterFO"*/-->
+    <body>
+        <form method="POST" th:action="@{|/authors|}" th:object="${filter}" th:fragment="form">
+            <fieldset>
+                <div class="row my-2">
+                    <div class="col-4">
+                        <label class="form-label" for="firstName">First name</label>
+                        <input type="text" id="firstName" name="firstName" class="form-control" th:field="*{firstName}"/>
+                    </div>
+                    <div class="col-4">
+                        <label class="form-label" for="middleName">Middle name</label>
+                        <input type="text" id="middleName" name="middleName" class="form-control" th:field="*{middleName}"/>
+                    </div>
+                    <div class="col-4">
+                        <label class="form-label" for="lastName">Last name</label>
+                        <input type="text" id="lastName" name="lastName" class="form-control" th:field="*{lastName}"/>
+                    </div>
+                    <div class="col-2 customButton">
+                        <button type="submit" id="search" name="search" class="btn btn-primary">Search</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </body>
+</html>

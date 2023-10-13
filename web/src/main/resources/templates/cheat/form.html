@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      th:lang="en">
+    <!--/*@thymesVar id="gameUuid" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="action" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="cheat" type="com.github.vhromada.catalog.web.fo.CheatFO"*/-->
+    <head th:replace="~{layout :: head}"></head>
+    <body>
+        <th:block th:replace="~{layout :: menu}"/>
+        <th:block th:replace="~{cheat/menu :: menu}"/>
+        <div class="container-fluid">
+            <th:block th:replace="~{layout :: title}"/>
+            <form method="POST" th:action="@{|/games/${gameUuid}/cheats/${action}|}" th:object="${cheat}">
+                <fieldset>
+                    <input type="hidden" id="uuid" name="uuid" th:field="*{uuid}" th:if="${action == 'edit'}"/>
+                    <span class="error my-2" th:if="${#fields.hasErrors('data')}" th:errors="*{data}"></span>
+                    <div class="col my-2">
+                        <label class="form-label" for="gameSetting">Setting for game</label>
+                        <input type="text" id="gameSetting" name="gameSetting" class="form-control" th:field="*{gameSetting}"/>
+                        <span class="error" th:if="${#fields.hasErrors('gameSetting')}" th:errors="*{gameSetting}"></span>
+                    </div>
+                    <div class="col my-2">
+                        <label class="form-label" for="cheatSetting">Setting for cheat</label>
+                        <input type="text" id="cheatSetting" name="cheatSetting" class="form-control" th:field="*{cheatSetting}"/>
+                        <span class="error" th:if="${#fields.hasErrors('cheatSetting')}" th:errors="*{cheatSetting}"></span>
+                    </div>
+                    <label class="my-2">Cheats</label>
+                    <th:block th:each="item, info : *{data}">
+                        <div class="col">
+                            <label th:text="|Cheat ${info.index + 1}|"></label>
+                            <button type="submit" class="btn btn-danger" formnovalidate="formnovalidate" th:id="|removeCheat${info.index}|" th:name="|removeCheat${info.index}|"
+                                    th:if="${info.index > 0}">
+                                Remove
+                            </button>
+                        </div>
+                        <div class="col my-2">
+                            <label class="form-label" th:for="|cheat${info.index}Action|" th:text="|Cheat ${info.index + 1} action|"></label>
+                            <input type="text" class="form-control" th:id="|cheat${info.index}Action|" th:name="|cheat${info.index}Action|" th:field="*{data[__${info.index}__].action}"/>
+                            <span class="error" th:if="${#fields.hasErrors('data[__${info.index}__].action')}" th:errors="*{data[__${info.index}__].action}"></span>
+                        </div>
+                        <div class="col my-2">
+                            <label class="form-label" th:for="|cheat${info.index}Description|" th:text="|Cheat ${info.index + 1} description|"></label>
+                            <input type="text" class="form-control" th:id="|cheat${info.index}Description|" th:name="|cheat${info.index}Description|"
+                                   th:field="*{data[__${info.index}__].description}"/>
+                            <span class="error" th:if="${#fields.hasErrors('data[__${info.index}__].description')}" th:errors="*{data[__${info.index}__].description}"></span>
+                        </div>
+                    </th:block>
+                    <div class="col my-2">
+                        <button type="submit" id="addCheat" name="addCheat" class="btn btn-success" formnovalidate="formnovalidate">Add</button>
+                    </div>
+                    <div class="col mt-4">
+                        <button type="submit" id="create" name="create" class="btn btn-primary" th:if="${action == 'add'}">Create</button>
+                        <button type="submit" id="update" name="update" class="btn btn-primary" th:if="${action == 'edit'}">Update</button>
+                        <button type="submit" id="cancel" name="cancel" class="btn btn-danger" formnovalidate="formnovalidate">Cancel</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </body>
+</html>

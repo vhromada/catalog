@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      th:lang="en">
+    <!--/*@thymesVar id="accounts" type="com.github.vhromada.catalog.web.connector.entity.Account[]"*/-->
+    <!--/*@thymesVar id="currentPage" type="java.lang.Integer"*/-->
+    <!--/*@thymesVar id="totalPages" type="java.lang.Integer"*/-->
+    <!--/*@thymesVar id="query" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="statistics" type="com.github.vhromada.catalog.web.connector.entity.AccountStatistics"*/-->
+    <head th:replace="~{layout :: head}"></head>
+    <body>
+        <th:block th:replace="~{layout :: menu}"/>
+        <div class="container-fluid">
+            <th:block th:replace="~{layout :: title}"/>
+            <th:block th:replace="~{account/searchForm :: form}"/>
+            <div class="table-responsive">
+                <table class="table table-hover" th:if="${!#lists.isEmpty(accounts)}">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Roles</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <th:block th:each="account : ${accounts}">
+                            <tr>
+                                <td th:text="${account.username}"></td>
+                                <td th:text="${T(com.github.vhromada.catalog.web.converter.ConverterUtils).convertStrings(account.roles)}"></td>
+                                <td><a th:href="@{|/accounts/${account.uuid}/roles/edit|}">Edit</a></td>
+                            </tr>
+                        </th:block>
+                    </tbody>
+                </table>
+            </div>
+            <nav aria-label="Accounts pagination" th:if="${!#lists.isEmpty(accounts) && totalPages > 1}">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item" th:classappend="${currentPage <= 1} ? 'disabled'">
+                        <a class="page-link" aria-label="First" th:attr="tabIndex=${currentPage <= 1} ? -1" th:href="@{|/accounts${query}page=1|}">&laquo;&laquo;</a>
+                    </li>
+                    <li class="page-item" th:classappend="${currentPage <= 1} ? 'disabled'">
+                        <a class="page-link" aria-label="Previous" th:attr="tabIndex=${currentPage <= 1} ? -1" th:href="@{|/accounts${query}page=${currentPage - 1}|}">&laquo;</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" th:text="${T(com.github.vhromada.catalog.web.converter.ConverterUtils).convertPage(currentPage, totalPages)}"
+                           th:href="@{|/accounts${query}page=${currentPage}|}">
+                        </a>
+                    </li>
+                    <li class="page-item" th:classappend="${currentPage >= totalPages} ? 'disabled'">
+                        <a class="page-link" aria-label="Next" th:attr="tabIndex=${currentPage >= totalPages} ? -1" th:href="@{|/accounts${query}page=${currentPage + 1}|}">&raquo;</a>
+                    </li>
+                    <li class="page-item" th:classappend="${currentPage >= totalPages} ? 'disabled'">
+                        <a class="page-link" aria-label="Next" th:attr="tabIndex=${currentPage >= totalPages} ? -1" th:href="@{|/accounts${query}page=${totalPages}|}">&raquo;&raquo;</a>
+                    </li>
+                </ul>
+            </nav>
+            <th:block th:if="${#lists.isEmpty(accounts)}">No records.</th:block>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Count of accounts</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td th:text="${statistics.count}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

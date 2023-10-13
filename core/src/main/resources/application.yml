@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: Catalog
+  jackson:
+    default-property-inclusion: non_null
+    serialization:
+      indent_output: true
+  jpa:
+    hibernate:
+      ddl-auto: none
+    open-in-view: false
+    show-sql: false
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+springdoc:
+  group-configs[0]:
+    group: catalog
+    paths-to-match: /rest/*
+  swagger-ui:
+    doc-expansion: none
+
+---
+
+server:
+  port: 8100
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    driverClassName: org.h2.Driver
+    name: Catalog
+    password: stargate stargate
+    url: jdbc:h2:.\\db\\Catalog;CIPHER=AES
+    username: lavina
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect

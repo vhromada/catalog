@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      th:lang="en">
+    <head th:replace="~{layout :: head}"></head>
+    <body>
+        <th:block th:replace="~{layout :: menu}"/>
+        <th:block th:replace="~{song/menu :: menu}"/>
+        <div class="container-fluid">
+            <th:block th:replace="~{layout :: title}"/>
+            <div class="table-responsive">
+                <table class="table table-hover" th:if="${!#lists.isEmpty(songs)}">
+                    <thead>
+                        <tr>
+                            <th>Song</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <th:block th:each="song : ${songs}">
+                            <tr>
+                                <td><a th:href="@{|/music/${music}/songs/${song.uuid}/detail|}" th:text="${song.name}"></a></td>
+                                <td><a th:href="@{|/music/${music}/songs/duplicate/${song.uuid}|}">Duplicate</a></td>
+                                <td><a th:href="@{|/music/${music}/songs/edit/${song.uuid}|}">Edit</a></td>
+                                <td><a th:href="@{|/music/${music}/songs/remove/${song.uuid}|}">Remove</a></td>
+                            </tr>
+                        </th:block>
+                    </tbody>
+                </table>
+            </div>
+            <nav aria-label="Songs pagination" th:if="${!#lists.isEmpty(songs) && totalPages > 1}">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item" th:classappend="${currentPage <= 1} ? 'disabled'">
+                        <a class="page-link" aria-label="First" th:attr="tabIndex=${currentPage <= 1} ? -1" th:href="@{|/music/${music}/songs?page=1|}">&laquo;&laquo;</a>
+                    </li>
+                    <li class="page-item" th:classappend="${currentPage <= 1} ? 'disabled'">
+                        <a class="page-link" aria-label="Previous" th:attr="tabIndex=${currentPage <= 1} ? -1" th:href="@{|/music/${music}/songs?page=${currentPage - 1}|}">&laquo;</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" th:text="${T(com.github.vhromada.catalog.web.converter.ConverterUtils).convertPage(currentPage, totalPages)}"
+                           th:href="@{|/music/${music}/songs?page=${currentPage}|}">
+                        </a>
+                    </li>
+                    <li class="page-item" th:classappend="${currentPage >= totalPages} ? 'disabled'">
+                        <a class="page-link" aria-label="Next" th:attr="tabIndex=${currentPage >= totalPages} ? -1" th:href="@{|/music/${music}/songs?page=${currentPage + 1}|}">&raquo;</a>
+                    </li>
+                    <li class="page-item" th:classappend="${currentPage >= totalPages} ? 'disabled'">
+                        <a class="page-link" aria-label="Next" th:attr="tabIndex=${currentPage >= totalPages} ? -1" th:href="@{|/music/${music}/songs?page=${totalPages}|}">&raquo;&raquo;</a>
+                    </li>
+                </ul>
+            </nav>
+            <th:block th:if="${#lists.isEmpty(songs)}">No records.</th:block>
+        </div>
+    </body>
+</html>

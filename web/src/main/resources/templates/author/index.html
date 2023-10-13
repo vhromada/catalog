@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      th:lang="en">
+    <!--/*@thymesVar id="authors" type="java.util.List<com.github.vhromada.catalog.web.connector.entity.Author>"*/-->
+    <!--/*@thymesVar id="currentPage" type="java.lang.Integer"*/-->
+    <!--/*@thymesVar id="totalPages" type="java.lang.Integer"*/-->
+    <!--/*@thymesVar id="query" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="statistics" type="com.github.vhromada.catalog.web.connector.entity.AuthorStatistics"*/-->
+    <head th:replace="~{layout :: head}"></head>
+    <body>
+        <th:block th:replace="~{layout :: menu}"/>
+        <th:block th:replace="~{author/menu :: menu}"/>
+        <div class="container-fluid">
+            <th:block th:replace="~{layout :: title}"/>
+            <th:block th:replace="~{author/searchForm :: form}"/>
+            <div class="table-responsive">
+                <table class="table table-hover" th:if="${!#lists.isEmpty(authors)}">
+                    <thead>
+                        <tr>
+                            <th>Author</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <th:block th:each="author : ${authors}">
+                            <tr>
+                                <td th:text="${T(com.github.vhromada.catalog.web.converter.ConverterUtils).convertAuthorName(author)}"></td>
+                                <td><a th:href="@{|/authors/duplicate/${author.uuid}|}">Duplicate</a></td>
+                                <td><a th:href="@{|/authors/edit/${author.uuid}|}">Edit</a></td>
+                                <td><a th:href="@{|/authors/remove/${author.uuid}|}">Remove</a></td>
+                            </tr>
+                        </th:block>
+                    </tbody>
+                </table>
+            </div>
+            <nav aria-label="Authors pagination" th:if="${!#lists.isEmpty(authors) && totalPages > 1}">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item" th:classappend="${currentPage <= 1} ? 'disabled'">
+                        <a class="page-link" aria-label="First" th:attr="tabIndex=${currentPage <= 1} ? -1" th:href="@{|/authors${query}page=1|}">&laquo;&laquo;</a>
+                    </li>
+                    <li class="page-item" th:classappend="${currentPage <= 1} ? 'disabled'">
+                        <a class="page-link" aria-label="Previous" th:attr="tabIndex=${currentPage <= 1} ? -1" th:href="@{|/authors${query}page=${currentPage - 1}|}">&laquo;</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" th:text="${T(com.github.vhromada.catalog.web.converter.ConverterUtils).convertPage(currentPage, totalPages)}"
+                           th:href="@{|/authors${query}page=${currentPage}|}">
+                        </a>
+                    </li>
+                    <li class="page-item" th:classappend="${currentPage >= totalPages} ? 'disabled'">
+                        <a class="page-link" aria-label="Next" th:attr="tabIndex=${currentPage >= totalPages} ? -1" th:href="@{|/authors${query}page=${currentPage + 1}|}">&raquo;</a>
+                    </li>
+                    <li class="page-item" th:classappend="${currentPage >= totalPages} ? 'disabled'">
+                        <a class="page-link" aria-label="Next" th:attr="tabIndex=${currentPage >= totalPages} ? -1" th:href="@{|/authors${query}page=${totalPages}|}">&raquo;&raquo;</a>
+                    </li>
+                </ul>
+            </nav>
+            <th:block th:if="${#lists.isEmpty(authors)}">No records.</th:block>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Count of authors</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td th:text="${statistics.count}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      th:lang="en">
+    <!--/*@thymesVar id="music" type="java.lang.String"*/-->
+    <body>
+        <th:block th:fragment="menu">
+            <th:block th:replace="~{music/menu :: menu}"/>
+            <div class="navbar navbar-expand-lg navbar-light bg-light innerMenu">
+                <div class="container-fluid">
+                    <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#songNavbarCollapse" aria-controls="songNavbarCollapse" aria-expanded="false"
+                            aria-label="Toggle song navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div id="songNavbarCollapse" class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item"><a class="nav-link" th:href="@{|/music/${music}/songs|}">All songs</a></li>
+                            <li class="nav-item"><a class="nav-link" th:href="@{|/music/${music}/songs/add|}">Add song</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </th:block>
+    </body>
+</html>

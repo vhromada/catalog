@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      th:lang="en">
+    <!--/*@thymesVar id="action" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="music" type="com.github.vhromada.catalog.web.fo.MusicFO"*/-->
+    <head th:replace="~{layout :: head}"></head>
+    <body>
+        <th:block th:replace="~{layout :: menu}"/>
+        <th:block th:replace="~{music/menu :: menu}"/>
+        <div class="container-fluid">
+            <th:block th:replace="~{layout :: title}"/>
+            <form method="POST" th:action="@{|/music/${action}|}" th:object="${music}">
+                <fieldset>
+                    <input type="hidden" id="uuid" name="uuid" th:field="*{uuid}" th:if="${action == 'edit'}"/>
+                    <div class="col my-2">
+                        <label class="form-label" for="name">Name</label>
+                        <input type="text" id="name" name="name" class="form-control" th:field="*{name}"/>
+                        <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+                    </div>
+                    <div class="col my-2">
+                        <label class="form-label" for="wikiCz">Czech Wikipedia</label>
+                        <input type="text" id="wikiCz" name="wikiCz" class="form-control" th:field="*{wikiCz}"/>
+                        <span class="error" th:if="${#fields.hasErrors('wikiCz')}" th:errors="*{wikiCz}"></span>
+                    </div>
+                    <div class="col my-2">
+                        <label class="form-label" for="wikiEn">English Wikipedia</label>
+                        <input type="text" id="wikiEn" name="wikiEn" class="form-control" th:field="*{wikiEn}"/>
+                        <span class="error" th:if="${#fields.hasErrors('wikiEn')}" th:errors="*{wikiEn}"></span>
+                    </div>
+                    <div class="col my-2">
+                        <label class="form-label" for="mediaCount">Count of media</label>
+                        <input type="number" id="mediaCount" name="mediaCount" class="form-control" min="1" max="100" step="1" th:field="*{mediaCount}"/>
+                        <span class="error" th:if="${#fields.hasErrors('mediaCount')}" th:errors="*{mediaCount}"></span>
+                    </div>
+                    <div class="col my-2">
+                        <label class="form-label" for="note">Note</label>
+                        <input type="text" id="note" name="note" class="form-control" th:field="*{note}"/>
+                        <span class="error" th:if="${#fields.hasErrors('note')}" th:errors="*{note}"></span>
+                    </div>
+                    <div class="col mt-4">
+                        <button type="submit" id="create" name="create" class="btn btn-primary" th:if="${action == 'add'}">Create</button>
+                        <button type="submit" id="update" name="update" class="btn btn-primary" th:if="${action == 'edit'}">Update</button>
+                        <button type="submit" id="cancel" name="cancel" class="btn btn-danger" formnovalidate="formnovalidate">Cancel</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </body>
+</html>

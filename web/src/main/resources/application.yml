@@ -1,0 +1,46 @@
+spring:
+  application:
+    name: Catalog Web Spring
+  jackson:
+    default-property-inclusion: non_null
+    serialization:
+      indent_output: true
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+  thymeleaf:
+    cache: false
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+catalog:
+  connector:
+    log:
+      enabled: false
+  items_per_page: 50
+
+---
+
+server:
+  port: 8000
+spring:
+  config:
+    activate:
+      on-profile: dev
+catalog:
+  connector:
+    url: http://localhost:8100
+    username: catalog
+    password: catalog
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: log
+catalog:
+  connector:
+    log:
+      enabled: true

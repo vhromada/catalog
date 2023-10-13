@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      th:lang="en">
+    <head th:replace="~{layout :: head}"></head>
+    <body>
+        <th:block th:replace="~{layout :: menu}"/>
+        <th:block th:replace="~{music/menu :: menu}"/>
+        <div class="container-fluid">
+            <th:block th:replace="~{layout :: title}"/>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <tbody>
+                        <tr>
+                            <td class="title">Name</td>
+                            <td th:text="${music.name}"></td>
+                        </tr>
+                        <tr>
+                            <td class="title">Count of media</td>
+                            <td th:text="${music.mediaCount}"></td>
+                        </tr>
+                        <th:block th:if="${music.songsCount > 0}">
+                            <tr>
+                                <td class="title">Count of songs</td>
+                                <td th:text="${music.songsCount}"></td>
+                            </tr>
+                            <tr>
+                                <td class="title">Total length</td>
+                                <td th:text="${music.formattedLength}"></td>
+                            </tr>
+                        </th:block>
+                        <tr th:if="${!#strings.isEmpty(music.note)}">
+                            <td class="title">Note</td>
+                            <td th:text="${music.note}"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><a th:href="@{|/music/${music.uuid}/songs|}">Songs</a></td>
+                        </tr>
+                        <tr th:if="${!#strings.isEmpty(music.wikiCz)}">
+                            <td colspan="2"><a target="_blank" th:href="@{|https://cz.wikipedia.org/wiki/${music.wikiCz}|}">Czech Wikipedia</a></td>
+                        </tr>
+                        <tr th:if="${!#strings.isEmpty(music.wikiEn)}">
+                            <td colspan="2"><a target="_blank" th:href="@{|https://en.wikipedia.org/wiki/${music.wikiEn}|}">English Wikipedia</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

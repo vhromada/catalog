@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      th:lang="en">
+    <!--/*@thymesVar id="loginError" type="java.lang.Boolean"*/-->
+    <head th:replace="~{layout :: head}"></head>
+    <body>
+        <th:block th:replace="~{layout :: menu}"/>
+        <div class="container-fluid">
+            <form method="POST" th:action="@{/login}">
+                <fieldset>
+                    <span class="error my-2" th:if="${loginError}">Wrong user or password</span>
+                    <div class="col my-2">
+                        <label class="form-label" for="username">Username</label>
+                        <input type="text" id="username" name="username" class="form-control"/>
+                    </div>
+                    <div class="col my-2">
+                        <label class="form-label" for="password">Password</label>
+                        <input type="password" id="password" name="password" class="form-control"/>
+                    </div>
+                    <div class="col mt-4">
+                        <button type="submit" id="submit" name="submit" class="btn btn-primary">Log in</button>
+                        <a th:href="@{/registration}">Registration</a>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      th:lang="en">
+    <!--/*@thymesVar id="action" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="book" type="com.github.vhromada.catalog.web.fo.BookFO"*/-->
+    <!--/*@thymesVar id="authors" type="com.github.vhromada.catalog.web.connector.entity.Author[]"*/-->
+    <head th:replace="~{layout :: head}"></head>
+    <body>
+        <th:block th:replace="~{layout :: menu}"/>
+        <th:block th:replace="~{book/menu :: menu}"/>
+        <div class="container-fluid">
+            <th:block th:replace="~{layout :: title}"/>
+            <form method="POST" th:action="@{|/books/${action}|}" th:object="${book}">
+                <fieldset>
+                    <input type="hidden" id="uuid" name="uuid" th:field="*{uuid}" th:if="${action == 'edit'}"/>
+                    <div class="col my-2">
+                        <label class="form-label" for="czechName">Czech name</label>
+                        <input type="text" id="czechName" name="czechName" class="form-control" th:field="*{czechName}"/>
+                        <span class="error" th:if="${#fields.hasErrors('czechName')}" th:errors="*{czechName}"></span>
+                    </div>
+                    <div class="col my-2">
+                        <label class="form-label" for="originalName">Original name</label>
+                        <input type="text" id="originalName" name="originalName" class="form-control" th:field="*{originalName}"/>
+                        <span class="error" th:if="${#fields.hasErrors('originalName')}" th:errors="*{originalName}"></span>
+                    </div>
+                    <div class="col my-2">
+                        <label class="form-label" for="description">Description</label>
+                        <input type="text" id="description" name="description" class="form-control" th:field="*{description}"/>
+                        <span class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+                    </div>
+                    <div class="col my-2">
+                        <label class="form-label" for="note">Note</label>
+                        <input type="text" id="note" name="note" class="form-control" th:field="*{note}"/>
+                        <span class="error" th:if="${#fields.hasErrors('note')}" th:errors="*{note}"></span>
+                    </div>
+                    <div class="col my-2">
+                        <label class="form-label" for="authors">Authors</label>
+                        <select id="authors" name="authors" multiple="multiple" class="form-control" th:field="*{authors}">
+                            <option th:each="author : ${authors}" th:value="${author.uuid}" th:text="${T(com.github.vhromada.catalog.web.converter.ConverterUtils).convertAuthorName(author)}"></option>
+                        </select>
+                        <span class="error" th:if="${#fields.hasErrors('authors')}" th:errors="*{authors}"></span>
+                    </div>
+                    <div class="col mt-4">
+                        <button type="submit" id="create" name="create" class="btn btn-primary" th:if="${action == 'add'}">Create</button>
+                        <button type="submit" id="update" name="update" class="btn btn-primary" th:if="${action == 'edit'}">Update</button>
+                        <button type="submit" id="cancel" name="cancel" class="btn btn-danger" formnovalidate="formnovalidate">Cancel</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </body>
+</html>

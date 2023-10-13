@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      th:lang="en">
+    <!--/*@thymesVar id="show" type="java.lang.String"*/-->
+    <body>
+        <th:block th:fragment="menu">
+            <th:block th:replace="~{show/menu :: menu}"/>
+            <div class="navbar navbar-expand-lg navbar-light bg-light innerMenu">
+                <div class="container-fluid">
+                    <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#seasonNavbarCollapse" aria-controls="seasonNavbarCollapse" aria-expanded="false"
+                            aria-label="Toggle season navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div id="seasonNavbarCollapse" class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item"><a class="nav-link" th:href="@{|/shows/${show}/seasons|}">All seasons</a></li>
+                            <li class="nav-item"><a class="nav-link" th:href="@{|/shows/${show}/seasons/add|}">Add season</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </th:block>
+    </body>
+</html>

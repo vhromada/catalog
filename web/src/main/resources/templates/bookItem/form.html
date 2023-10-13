@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      th:lang="en">
+    <!--/*@thymesVar id="bookUuid" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="action" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="bookItem" type="com.github.vhromada.catalog.web.fo.BookItemFO"*/-->
+    <!--/*@thymesVar id="languages" type="java.lang.String[]"*/-->
+    <!--/*@thymesVar id="formats" type="java.lang.String[]"*/-->
+    <head th:replace="~{layout :: head}"></head>
+    <body>
+        <th:block th:replace="~{layout :: menu}"/>
+        <th:block th:replace="~{bookItem/menu :: menu}"/>
+        <div class="container-fluid">
+            <th:block th:replace="~{layout :: title}"/>
+            <form method="POST" th:action="@{|/books/${bookUuid}/items/${action}|}" th:object="${bookItem}">
+                <fieldset>
+                    <input type="hidden" id="uuid" name="uuid" th:field="*{uuid}" th:if="${action == 'edit'}"/>
+                    <label class="mt-2">Languages</label>
+                    <th:block th:each="language, info : ${languages}">
+                        <div class="col form-check" th:classappend="${info.index == 0 ? 'mb-2' : 'my-2'}">
+                            <input type="checkbox" class="form-check-input" th:id="|language${info.index}|" th:field="*{languages}" th:value="${language}"/>
+                            <label class="form-check-label" th:for="|language${info.index}|" th:text="${language}"></label>
+                        </div>
+                    </th:block>
+                    <span class="error" th:if="${#fields.hasErrors('languages')}" th:errors="*{languages}"></span>
+                    <br th:if="${#fields.hasErrors('languages')}"/>
+                    <label class="mt-2">Format</label>
+                    <th:block th:each="format, info : ${formats}">
+                        <div class="col form-check" th:classappend="${info.index == 0 ? 'mb-2' : 'my-2'}">
+                            <input type="radio" class="form-check-input" th:id="|format${info.index}|" th:field="*{format}" th:value="${format}"/>
+                            <label class="form-check-label" th:for="|format${info.index}|" th:text="${format}"></label>
+                        </div>
+                    </th:block>
+                    <span class="error" th:if="${#fields.hasErrors('format')}" th:errors="*{format}"></span>
+                    <div class="col my-2">
+                        <label class="form-label" for="note">Note</label>
+                        <input type="text" id="note" name="note" class="form-control" th:field="*{note}"/>
+                        <span class="error" th:if="${#fields.hasErrors('note')}" th:errors="*{note}"></span>
+                    </div>
+                    <div class="col mt-4">
+                        <button type="submit" id="create" name="create" class="btn btn-primary" th:if="${action == 'add'}">Create</button>
+                        <button type="submit" id="update" name="update" class="btn btn-primary" th:if="${action == 'edit'}">Update</button>
+                        <button type="submit" id="cancel" name="cancel" class="btn btn-danger" formnovalidate="formnovalidate">Cancel</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </body>
+</html>

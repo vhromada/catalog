@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      th:lang="en">
+    <body>
+        <div class="navbar navbar-expand-lg navbar-light bg-light innerMenu" th:fragment="menu">
+            <div class="container-fluid">
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#movieNavbarCollapse" aria-controls="movieNavbarCollapse" aria-expanded="false"
+                        aria-label="Toggle movie navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div id="movieNavbarCollapse" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="nav-item"><a class="nav-link" th:href="@{/movies}">All movies</a></li>
+                        <li class="nav-item"><a class="nav-link" th:href="@{/movies/add}">Add movie</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

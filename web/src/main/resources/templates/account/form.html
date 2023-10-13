@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      th:lang="en">
+    <!--/*@thymesVar id="account" type="com.github.vhromada.catalog.web.fo.AccountFO"*/-->
+    <head th:replace="~{layout :: head}"></head>
+    <body>
+        <th:block th:replace="~{layout :: menu}"/>
+        <div class="container-fluid">
+            <th:block th:replace="~{layout :: title}"/>
+            <form method="POST" th:action="@{/accounts/edit}" th:object="${account}">
+                <fieldset>
+                    <span class="error global" th:if="${#fields.hasErrors('global')}" th:errors="*{global}"></span>
+                    <div class="col my-2">
+                        <label class="form-label" for="username">Username</label>
+                        <input type="text" id="username" name="username" class="form-control" th:field="*{username}"/>
+                        <span class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
+                    </div>
+                    <div class="col my-2">
+                        <label class="form-label" for="password">Password</label>
+                        <input type="password" id="password" name="password" class="form-control" th:field="*{password}"/>
+                        <span class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+                    </div>
+                    <div class="col my-2">
+                        <label class="form-label" for="copyPassword">Copy of password</label>
+                        <input type="password" id="copyPassword" name="copyPassword" class="form-control" th:field="*{copyPassword}"/>
+                        <span class="error" th:if="${#fields.hasErrors('copyPassword')}" th:errors="*{copyPassword}"></span>
+                    </div>
+                    <div class="col mt-4">
+                        <button type="submit" id="update" name="update" class="btn btn-primary">Update</button>
+                        <button type="submit" id="cancel" name="cancel" class="btn btn-danger" formnovalidate="formnovalidate">Cancel</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </body>
+</html>

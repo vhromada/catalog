@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      th:lang="en">
+    <!--/*@thymesVar id="accountUuid" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="role" type="com.github.vhromada.catalog.web.fo.RoleFO"*/-->
+    <!--/*@thymesVar id="roles" type="java.lang.String[]"*/-->
+    <head th:replace="~{layout :: head}"></head>
+    <body>
+        <th:block th:replace="~{layout :: menu}"/>
+        <div class="container-fluid">
+            <th:block th:replace="~{layout :: title}"/>
+            <form method="POST" th:action="@{|/accounts/${accountUuid}/roles/edit|}" th:object="${role}">
+                <fieldset>
+                    <th:block th:each="role, info : ${roles}">
+                        <div class="col my-2 form-check">
+                            <input type="checkbox" class="form-check-input" th:id="|role${info.index}|" th:field="*{roles}" th:value="${role}"/>
+                            <label class="form-check-label" th:for="|role${info.index}|" th:text="${role}"></label>
+                        </div>
+                    </th:block>
+                    <span class="error" th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}"></span>
+                    <div class="col mt-4">
+                        <button type="submit" id="update" name="update" class="btn btn-primary">Update</button>
+                        <button type="submit" id="cancel" name="cancel" class="btn btn-danger" formnovalidate="formnovalidate">Cancel</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </body>
+</html>

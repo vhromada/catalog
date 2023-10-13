@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      th:lang="en">
+    <!--/*@thymesVar id="filter" type="com.github.vhromada.catalog.web.fo.MultipleNameFilterFO"*/-->
+    <body>
+        <form method="POST" th:action="@{|/movies|}" th:object="${filter}" th:fragment="form">
+            <fieldset>
+                <div class="row my-2">
+                    <div class="col-5">
+                        <label class="form-label" for="czechName">Czech name</label>
+                        <input type="text" id="czechName" name="czechName" class="form-control" th:field="*{czechName}"/>
+                    </div>
+                    <div class="col-5">
+                        <label class="form-label" for="originalName">Original name</label>
+                        <input type="text" id="originalName" name="originalName" class="form-control" th:field="*{originalName}"/>
+                    </div>
+                    <div class="col-2 customButton">
+                        <button type="submit" id="search" name="search" class="btn btn-primary">Search</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </body>
+</html>
