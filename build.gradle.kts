@@ -22,7 +22,7 @@ plugins {
 
 allprojects {
     group = "com.github.vhromada.catalog"
-    version = "1.0.0"
+    version = "1.0.1-SNAPSHOT"
 
     tasks.withType<JavaCompile> {
         sourceCompatibility = "17"
