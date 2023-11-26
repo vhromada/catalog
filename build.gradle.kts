@@ -11,10 +11,10 @@ buildscript {
 }
 
 plugins {
-    val kotlinVersion = "1.9.10"
-    id("org.springframework.boot") version "3.1.4" apply false
-    id("io.spring.dependency-management") version "1.1.3" apply false
-    id("com.adarshr.test-logger") version "3.2.0" apply false
+    val kotlinVersion = "1.9.21"
+    id("org.springframework.boot") version "3.2.0" apply false
+    id("io.spring.dependency-management") version "1.1.4" apply false
+    id("com.adarshr.test-logger") version "4.0.0" apply false
     kotlin("jvm") version kotlinVersion apply false
     kotlin("plugin.spring") version kotlinVersion apply false
     kotlin("plugin.jpa") version kotlinVersion apply false
