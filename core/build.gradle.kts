@@ -15,8 +15,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.hibernate.validator:hibernate-validator")
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
-    implementation("io.github.oshai:kotlin-logging:5.1.0")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
+    implementation("io.github.oshai:kotlin-logging:6.0.1")
     implementation("org.flywaydb:flyway-core")
     runtimeOnly("com.h2database:h2:2.2.224")
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
@@ -24,7 +24,7 @@ dependencies {
     }
     testImplementation(kotlin("test-junit5"))
     testImplementation("org.mockito:mockito-junit-jupiter")
-    testImplementation("org.mockito.kotlin:mockito-kotlin:5.1.0")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:5.2.1")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 

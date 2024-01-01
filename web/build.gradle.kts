@@ -18,8 +18,8 @@ dependencies {
     implementation("jakarta.validation:jakarta.validation-api")
     implementation("org.hibernate.validator:hibernate-validator")
     implementation("org.apache.httpcomponents.client5:httpclient5")
-    implementation("commons-io:commons-io:2.15.0")
-    implementation("io.github.oshai:kotlin-logging:5.1.0")
+    implementation("commons-io:commons-io:2.15.1")
+    implementation("io.github.oshai:kotlin-logging:6.0.1")
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
