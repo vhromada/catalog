@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-    implementation(platform("org.springframework.boot:spring-boot-dependencies:3.2.1"))
+    implementation(platform("org.springframework.boot:spring-boot-dependencies:3.2.2"))
     compileOnly("org.springframework.data:spring-data-jpa")
     compileOnly("org.springframework:spring-webmvc")
     compileOnly("com.fasterxml.jackson.core:jackson-databind")
