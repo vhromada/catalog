@@ -35,7 +35,7 @@ class RegisterController(
      *
      * @return list of formats for book item
      */
-    @GetMapping("formats/bookItems")
+    @GetMapping("formats/book-items")
     fun getBookItemFormats(): List<String> {
         return getValues(type = RegisterType.BOOK_ITEM_FORMATS)
     }

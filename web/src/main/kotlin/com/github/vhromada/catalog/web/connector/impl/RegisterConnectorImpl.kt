@@ -49,7 +49,7 @@ class RegisterConnectorImpl(
     }
 
     override fun getBookItemFormats(): List<String> {
-        return exchange(request = RestRequest(method = HttpMethod.GET, url = "${getUrl()}/formats/bookItems", parameterizedType = object : ParameterizedTypeReference<List<String>>() {}))
+        return exchange(request = RestRequest(method = HttpMethod.GET, url = "${getUrl()}/formats/book-items", parameterizedType = object : ParameterizedTypeReference<List<String>>() {}))
             .throwExceptionIfAny()
             .get()
     }

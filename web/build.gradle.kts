@@ -19,7 +19,7 @@ dependencies {
     implementation("org.hibernate.validator:hibernate-validator")
     implementation("org.apache.httpcomponents.client5:httpclient5")
     implementation("commons-io:commons-io:2.15.1")
-    implementation("io.github.oshai:kotlin-logging:6.0.1")
+    implementation("io.github.oshai:kotlin-logging:6.0.3")
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }

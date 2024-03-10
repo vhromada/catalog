@@ -16,7 +16,7 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.hibernate.validator:hibernate-validator")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
-    implementation("io.github.oshai:kotlin-logging:6.0.1")
+    implementation("io.github.oshai:kotlin-logging:6.0.3")
     implementation("org.flywaydb:flyway-core")
     runtimeOnly("com.h2database:h2:2.2.224")
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
