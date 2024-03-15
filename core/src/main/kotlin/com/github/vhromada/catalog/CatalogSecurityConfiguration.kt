@@ -50,7 +50,10 @@ class CatalogSecurityConfiguration {
      */
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
-        http.authorizeHttpRequests { it.anyRequest().authenticated() }
+        http.authorizeHttpRequests {
+            it.requestMatchers("/rest/public/**").permitAll()
+                .anyRequest().authenticated()
+        }
         http.httpBasic {}
         http.csrf { it.disable() }
         return http.build()

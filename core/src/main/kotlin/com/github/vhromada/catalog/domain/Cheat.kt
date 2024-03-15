@@ -43,13 +43,13 @@ data class Cheat(
      * Setting for game
      */
     @Column(name = "game_setting")
-    var gameSetting: String,
+    var gameSetting: String?,
 
     /**
      * Setting for cheat
      */
     @Column(name = "cheat_setting")
-    var cheatSetting: String,
+    var cheatSetting: String?,
 
     /**
      * Data

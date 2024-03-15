@@ -37,8 +37,8 @@ class CheatMapperImpl(
         return Cheat(
             id = null,
             uuid = uuidProvider.getUuid(),
-            gameSetting = source.gameSetting!!,
-            cheatSetting = source.cheatSetting!!,
+            gameSetting = source.gameSetting,
+            cheatSetting = source.cheatSetting,
             data = cheatDataMapper.mapRequests(source = source.data!!.filterNotNull()).toMutableList()
         )
     }

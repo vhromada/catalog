@@ -10,9 +10,6 @@ spring:
       ddl-auto: none
     open-in-view: false
     show-sql: false
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
   servlet:
     multipart:
       max-file-size: 5MB
@@ -20,7 +17,7 @@ spring:
 springdoc:
   group-configs[0]:
     group: catalog
-    paths-to-match: /rest/*
+    paths-to-match: /rest/**
   swagger-ui:
     doc-expansion: none
 

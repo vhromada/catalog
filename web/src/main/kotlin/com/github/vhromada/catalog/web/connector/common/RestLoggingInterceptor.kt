@@ -94,15 +94,11 @@ class RestLoggingInterceptor(
      * @return status
      */
     private fun getStatus(response: ClientHttpResponse): String {
-        try {
-            val status = StringBuilder(response.statusCode.value().toString())
-            if (response.statusText.isNotEmpty()) {
-                status.append(" ${response.statusText}")
-            }
-            return status.toString()
-        } catch (exception: IOException) {
-            throw IllegalStateException("Cannot obtain response status", exception)
+        val status = StringBuilder(response.statusCode.value().toString())
+        if (response.statusText.isNotEmpty()) {
+            status.append(" ${response.statusText}")
         }
+        return status.toString()
     }
 
 }

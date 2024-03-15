@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.multipart.MultipartFile
-import java.io.IOException
 
 /**
  * A class represents controller for pictures.
@@ -73,11 +72,9 @@ class PictureController(
      *  * File is empty
      *
      * @param file picture
-     * @throws IOException if getting picture content fails
      */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @Throws(IOException::class)
     fun add(@RequestParam("file") file: MultipartFile) {
         if (file.isEmpty) {
             throw InputException(key = "FILE_EMPTY", message = "File mustn't be empty.")
